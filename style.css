@@ -1,3 +1,12 @@
+/* SonicLabsNews - Cryptocurrency News Platform */
+:root {
+    --color-primary: #3B82F6;
+    --color-secondary: #00D1FF;
+    --color-accent: #FF6B35;
+    --color-bg: #0D0D1A;
+    --color-text: #F9FAFB;
+}
+
 body { font-family: "Roboto", sans-serif; font-size: 16px; line-height: 28px; color: rgb(108, 111, 114); font-weight: 400; height: 100%; vertical-align: baseline; text-rendering: optimizelegibility; background-color: rgb(255, 255, 255); overflow-x: hidden; }
 a { color: rgb(41, 98, 255); text-decoration: none; }
 a:focus { text-decoration: none; outline: 0px; }
