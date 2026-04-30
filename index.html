@@ -20,54 +20,7 @@
     <meta name="twitter:site" content="@AsterNews">
     <link rel="canonical" href="https://asternews.io/">
     <link rel="stylesheet" href="1de98341b7e33ab1.css">
-    <style>
-        body { background-color: #0f0f1a; color: #e2e8f0; font-family: system-ui, -apple-system, sans-serif; }
-        .site-header { background-color: #1a1a2e; border-bottom: 1px solid #2d2d4a; padding: 1rem 0; position: sticky; top: 0; z-index: 50; }
-        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-        .site-logo { font-size: 1.5rem; font-weight: 700; color: #7c3aed; text-decoration: none; letter-spacing: -0.02em; }
-        .site-logo span { color: #a78bfa; }
-        .site-nav { display: flex; gap: 1.5rem; }
-        .site-nav a { color: #94a3b8; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
-        .site-nav a:hover { color: #a78bfa; }
-        .main-content { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; display: grid; grid-template-columns: 1fr 320px; gap: 2rem; }
-        @media (max-width: 768px) { .main-content { grid-template-columns: 1fr; } .site-nav { display: none; } }
-        .article-header h1 { font-size: 2rem; font-weight: 700; line-height: 1.2; margin-bottom: 1rem; color: #f1f5f9; }
-        .article-meta { display: flex; gap: 0.75rem; align-items: center; font-size: 0.85rem; color: #64748b; margin-bottom: 1.5rem; flex-wrap: wrap; }
-        .article-meta .category { background: #7c3aed; color: #fff; padding: 0.15rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; text-decoration: none; }
-        .article-body p { line-height: 1.7; margin-bottom: 1.25rem; color: #cbd5e1; }
-        .article-body h2 { font-size: 1.3rem; font-weight: 700; margin: 2rem 0 0.75rem; color: #f1f5f9; }
-        .article-body ul { margin: 0 0 1.25rem 1.5rem; list-style: disc; color: #cbd5e1; }
-        .article-body ul li { margin-bottom: 0.4rem; line-height: 1.6; }
-        .article-body blockquote { border-left: 3px solid #7c3aed; padding-left: 1rem; margin: 1.5rem 0; color: #94a3b8; font-style: italic; }
-        .highlight-box { background: #1e1b4b; border: 1px solid #3730a3; border-radius: 0.5rem; padding: 1.25rem; margin: 1.5rem 0; }
-        .highlight-box h3 { font-size: 1rem; font-weight: 700; color: #a78bfa; margin-bottom: 0.5rem; }
-        .sidebar { }
-        .sidebar-widget { background: #1a1a2e; border: 1px solid #2d2d4a; border-radius: 0.5rem; padding: 1.25rem; margin-bottom: 1.5rem; }
-        .sidebar-widget h3 { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin-bottom: 0.75rem; }
-        .sidebar-widget p { font-size: 0.875rem; color: #94a3b8; line-height: 1.6; }
-        .newsletter-form { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; }
-        .newsletter-form input { background: #0f0f1a; border: 1px solid #2d2d4a; color: #e2e8f0; padding: 0.5rem 0.75rem; border-radius: 0.375rem; font-size: 0.875rem; }
-        .newsletter-form button { background: #7c3aed; color: #fff; padding: 0.5rem; border-radius: 0.375rem; font-weight: 600; font-size: 0.875rem; cursor: pointer; border: none; }
-        .newsletter-form button:hover { background: #6d28d9; }
-        .site-footer { background: #1a1a2e; border-top: 1px solid #2d2d4a; margin-top: 3rem; padding: 3rem 0 1.5rem; }
-        .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-        .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem; }
-        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; } }
-        .footer-col h4 { font-weight: 700; color: #f1f5f9; margin-bottom: 0.75rem; }
-        .footer-col ul { list-style: none; margin: 0; padding: 0; }
-        .footer-col ul li { margin-bottom: 0.4rem; }
-        .footer-col ul li a { color: #64748b; text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
-        .footer-col ul li a:hover { color: #a78bfa; }
-        .footer-col p { color: #64748b; font-size: 0.875rem; line-height: 1.6; }
-        .footer-bottom { border-top: 1px solid #2d2d4a; padding-top: 1.5rem; text-align: center; color: #475569; font-size: 0.8rem; }
-        .related-articles { margin-top: 2.5rem; }
-        .related-articles h3 { font-size: 1.1rem; font-weight: 700; color: #f1f5f9; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #2d2d4a; }
-        .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-        @media (max-width: 768px) { .related-grid { grid-template-columns: 1fr; } }
-        .related-card { background: #1a1a2e; border: 1px solid #2d2d4a; border-radius: 0.5rem; padding: 1rem; }
-        .related-card h4 { font-size: 0.9rem; font-weight: 600; color: #e2e8f0; line-height: 1.4; }
-        .related-card span { font-size: 0.75rem; color: #64748b; }
-    </style>
+    <link rel="stylesheet" href="asternews.css">
 </head>
 <body>
 <header class="site-header">

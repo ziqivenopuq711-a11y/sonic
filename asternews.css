@@ -1,0 +1,964 @@
+/*
+ * AsterNews — Site Stylesheet
+ * Derived from: 1de98341b7e33ab1.css (Tailwind design tokens / utility layer)
+ *               style.css (BitcoinWorld theme — animations, header/footer patterns)
+ *
+ * Design system:
+ *   - Dark theme with deep navy backgrounds
+ *   - Purple accent (#7c3aed / #a78bfa)
+ *   - Type scale from the Tailwind token layer
+ *   - Motion patterns from style.css keyframes
+ */
+
+/* ============================================================
+   1. DESIGN TOKENS  (sourced from 1de98341b7e33ab1.css @layer theme)
+   ============================================================ */
+:root {
+  /* Brand palette — mapped from the Tailwind purple scale */
+  --an-accent:          #7c3aed;   /* purple-600 equivalent */
+  --an-accent-light:    #a78bfa;   /* purple-400 equivalent */
+  --an-accent-hover:    #6d28d9;   /* purple-700 equivalent */
+  --an-accent-dim:      #1e1b4b;   /* indigo-950 approximation */
+  --an-accent-border:   #3730a3;   /* indigo-700 approximation */
+
+  /* Backgrounds */
+  --an-bg-base:         #0f0f1a;
+  --an-bg-surface:      #1a1a2e;
+  --an-bg-surface-2:    #16213e;
+
+  /* Borders */
+  --an-border:          #2d2d4a;
+  --an-border-light:    #3d3d5a;
+
+  /* Text — mapped from Tailwind gray/slate scale */
+  --an-text-primary:    #f1f5f9;   /* slate-100 */
+  --an-text-body:       #cbd5e1;   /* slate-300 */
+  --an-text-muted:      #94a3b8;   /* slate-400 */
+  --an-text-faint:      #64748b;   /* slate-500 */
+  --an-text-dimmer:     #475569;   /* slate-600 */
+
+  /* Semantic colours from style.css theme */
+  --an-link:            #a78bfa;
+  --an-link-hover:      #c4b5fd;   /* purple-300 */
+
+  /* Spacing — based on the 0.25rem base spacing token */
+  --an-radius-sm:       0.25rem;
+  --an-radius-md:       0.375rem;
+  --an-radius-lg:       0.5rem;
+  --an-radius-xl:       0.75rem;
+  --an-radius-pill:     9999px;
+
+  /* Layout */
+  --an-max-width:       1200px;
+  --an-content-px:      1.5rem;
+
+  /* Transitions — from style.css 0.31s ease pattern */
+  --an-transition:      0.31s ease;
+  --an-transition-fast: 0.2s ease;
+}
+
+/* ============================================================
+   2. KEYFRAME ANIMATIONS  (adapted from style.css)
+   ============================================================ */
+
+/* Slide-up entrance for cards / widgets */
+@keyframes an-slide-up {
+  from { opacity: 0; transform: translateY(0.75rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Pulse glow — derived from pulseShadowlgprimary in style.css */
+@keyframes an-pulse-glow {
+  0%   { box-shadow: rgba(124, 58, 237, 0.7) 0 0 0 0; }
+  70%  { box-shadow: rgba(124, 58, 237, 0)   0 0 0 14px; }
+  100% { box-shadow: rgba(124, 58, 237, 0)   0 0 0 0; }
+}
+
+/* Accent underline sweep — from style.css nav ::before pattern */
+@keyframes an-sweep-in {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+
+/* Badge pop — from pulseShadowsmwhite adapted */
+@keyframes an-badge-pop {
+  0%   { box-shadow: rgba(167, 139, 250, 0.7) 0 0 0 0; }
+  70%  { box-shadow: rgba(167, 139, 250, 0)   0 0 0 8px; }
+  100% { box-shadow: rgba(167, 139, 250, 0)   0 0 0 0; }
+}
+
+/* ============================================================
+   3. GLOBAL BASE
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--an-bg-base);
+  color: var(--an-text-body);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Base link reset — from style.css a { color, text-decoration } */
+a {
+  color: var(--an-link);
+  text-decoration: none;
+  transition: color var(--an-transition-fast);
+}
+a:hover {
+  color: var(--an-link-hover);
+}
+a:focus-visible {
+  outline: 2px solid var(--an-accent-light);
+  outline-offset: 2px;
+  border-radius: var(--an-radius-sm);
+}
+
+/* Headings — combining style.css Spartan scale with token tracking */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--an-text-primary);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+}
+h1 { font-size: clamp(1.5rem, 4vw, 2.25rem); }
+h2 { font-size: clamp(1.2rem, 3vw, 1.5rem); }
+h3 { font-size: 1.125rem; }
+h4 { font-size: 1rem; }
+
+p {
+  margin: 0 0 1.25rem;
+  line-height: 1.75;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ============================================================
+   4. LAYOUT UTILITIES
+   ============================================================ */
+.page-wrap {
+  max-width: var(--an-max-width);
+  margin: 0 auto;
+  padding: 2.5rem var(--an-content-px);
+}
+
+/* ============================================================
+   5. HEADER  (nav pattern from style.css .site-header + .main-navigation)
+   ============================================================ */
+.site-header {
+  background-color: var(--an-bg-surface);
+  border-bottom: 1px solid var(--an-border);
+  padding: 0.9rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  /* style.css: transition: 0.31s */
+  transition: background-color var(--an-transition);
+}
+
+.header-inner {
+  max-width: var(--an-max-width);
+  margin: 0 auto;
+  padding: 0 var(--an-content-px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* Logo — from style.css .site-header .site-branding a pattern */
+.site-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--an-accent);
+  text-decoration: none;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  transition: color var(--an-transition-fast);
+}
+.site-logo span {
+  color: var(--an-accent-light);
+}
+.site-logo:hover {
+  color: var(--an-accent-hover);
+}
+
+/* Nav — from style.css .main-navigation nav ul li pattern */
+.site-nav {
+  display: flex;
+  gap: 0;
+  align-items: center;
+}
+
+.site-nav a {
+  position: relative;
+  color: var(--an-text-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+  letter-spacing: 0.01em;
+  transition: color var(--an-transition);
+}
+
+/* Underline sweep animation — from style.css nav ::before scaleX trick */
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0.75rem;
+  right: 0.75rem;
+  height: 2px;
+  background: var(--an-accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--an-transition);
+  border-radius: var(--an-radius-pill);
+}
+.site-nav a:hover {
+  color: var(--an-accent-light);
+}
+.site-nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ============================================================
+   6. FOOTER  (adapted from style.css .footer-area / .footer-style-3)
+   ============================================================ */
+.site-footer {
+  background-color: var(--an-bg-surface);
+  border-top: 1px solid var(--an-border);
+  margin-top: 3rem;
+  padding: 3rem 0 1.5rem;
+  /* footer-area in style.css: position relative, overflow hidden */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle gradient orb — visual enhancement inspired by style.css dark footer bg */
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.footer-inner {
+  max-width: var(--an-max-width);
+  margin: 0 auto;
+  padding: 0 var(--an-content-px);
+  position: relative;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-col h4 {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--an-text-primary);
+  margin-bottom: 0.9rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.footer-col p {
+  color: var(--an-text-faint);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+/* Footer nav links — from style.css .footer-style-3 .footer-top-area a */
+.footer-col ul li {
+  margin-bottom: 0.45rem;
+}
+.footer-col ul li a {
+  color: var(--an-text-faint);
+  font-size: 0.875rem;
+  transition: color var(--an-transition-fast), padding-left var(--an-transition-fast);
+  display: inline-block;
+}
+.footer-col ul li a:hover {
+  color: var(--an-accent-light);
+  padding-left: 4px;
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--an-border);
+  padding-top: 1.5rem;
+  text-align: center;
+  color: var(--an-text-dimmer);
+  font-size: 0.8rem;
+}
+.footer-bottom p {
+  margin: 0;
+}
+
+/* ============================================================
+   7. PAGE LAYOUT — standard content pages
+   ============================================================ */
+.page-title {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: var(--an-text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.page-subtitle {
+  color: var(--an-text-faint);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+/* Section headings — inspired by style.css .sidebar-widget-area widgettitle */
+.section-header {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--an-accent-light);
+  margin: 2rem 0 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.section-header::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 1.1em;
+  background: var(--an-accent);
+  border-radius: var(--an-radius-pill);
+  flex-shrink: 0;
+}
+
+.content-text {
+  color: var(--an-text-body);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--an-border);
+  margin: 2rem 0;
+}
+
+/* Info / highlight box — from highlight-box in index.html */
+.info-box {
+  background: var(--an-accent-dim);
+  border: 1px solid var(--an-accent-border);
+  border-radius: var(--an-radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.info-box h4 {
+  color: var(--an-accent-light);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  margin-bottom: 0.6rem;
+}
+.info-box ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  color: var(--an-text-body);
+}
+.info-box ul li {
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   8. ARTICLE LAYOUT  (index.html)
+   ============================================================ */
+.main-content {
+  max-width: var(--an-max-width);
+  margin: 0 auto;
+  padding: 2rem var(--an-content-px);
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Article header */
+.article-header h1 {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+  color: var(--an-text-primary);
+}
+
+/* Article meta bar — style.css .entry-header ul.entry-meta */
+.article-meta {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  font-size: 0.8125rem;
+  color: var(--an-text-faint);
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Category badge — from style.css .entry-categories .category-style */
+.article-meta .category {
+  background: var(--an-accent);
+  color: #fff;
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--an-radius-pill);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background var(--an-transition-fast);
+}
+.article-meta .category:hover {
+  background: var(--an-accent-hover);
+}
+
+/* Article body typography */
+.article-body p {
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  color: var(--an-text-body);
+}
+.article-body h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 2rem 0 0.75rem;
+  color: var(--an-text-primary);
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--an-border);
+}
+.article-body ul {
+  margin: 0 0 1.25rem 1.5rem;
+  list-style: disc;
+  color: var(--an-text-body);
+}
+.article-body ul li {
+  margin-bottom: 0.4rem;
+  line-height: 1.65;
+}
+.article-body blockquote {
+  border-left: 3px solid var(--an-accent);
+  padding: 0.5rem 0 0.5rem 1.25rem;
+  margin: 1.5rem 0;
+  color: var(--an-text-muted);
+  font-style: italic;
+}
+
+/* Highlight box within article body */
+.highlight-box {
+  background: var(--an-accent-dim);
+  border: 1px solid var(--an-accent-border);
+  border-radius: var(--an-radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  animation: an-slide-up 0.4s ease both;
+}
+.highlight-box h3 {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--an-accent-light);
+  margin-bottom: 0.6rem;
+}
+.highlight-box ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  color: var(--an-text-body);
+}
+.highlight-box ul li {
+  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Related articles block */
+.related-articles {
+  margin-top: 2.5rem;
+}
+.related-articles h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--an-text-primary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--an-border);
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.related-card {
+  background: var(--an-bg-surface);
+  border: 1px solid var(--an-border);
+  border-radius: var(--an-radius-lg);
+  padding: 1rem;
+  transition: border-color var(--an-transition-fast), transform var(--an-transition-fast);
+}
+.related-card:hover {
+  border-color: var(--an-accent-border);
+  transform: translateY(-2px);
+}
+.related-card h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--an-text-body);
+  line-height: 1.45;
+  margin-bottom: 0.4rem;
+}
+.related-card span {
+  font-size: 0.75rem;
+  color: var(--an-text-faint);
+}
+
+/* ============================================================
+   9. SIDEBAR
+   ============================================================ */
+.sidebar {
+  /* sticky position on wide screens */
+  position: sticky;
+  top: 5rem;
+}
+
+.sidebar-widget {
+  background: var(--an-bg-surface);
+  border: 1px solid var(--an-border);
+  border-radius: var(--an-radius-lg);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  animation: an-slide-up 0.35s ease both;
+}
+.sidebar-widget h3 {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--an-text-primary);
+  margin-bottom: 0.75rem;
+  /* dot accent from style.css .widgettitle */
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.sidebar-widget h3::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--an-accent);
+  flex-shrink: 0;
+  /* pulseShadowlgprimary adaptation */
+  animation: an-pulse-glow 2.5s ease infinite;
+}
+.sidebar-widget p {
+  font-size: 0.875rem;
+  color: var(--an-text-muted);
+  line-height: 1.65;
+}
+
+/* Trending list within sidebar */
+.sidebar-widget ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar-widget ul li {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--an-border);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.sidebar-widget ul li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.sidebar-widget ul li a {
+  color: var(--an-text-body);
+  text-decoration: none;
+  transition: color var(--an-transition-fast);
+}
+.sidebar-widget ul li a:hover {
+  color: var(--an-accent-light);
+}
+
+/* Newsletter form — style.css .search-form adapted */
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.newsletter-form input {
+  background: var(--an-bg-base);
+  border: 1px solid var(--an-border);
+  color: var(--an-text-primary);
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--an-radius-md);
+  font-size: 0.875rem;
+  transition: border-color var(--an-transition-fast);
+  width: 100%;
+}
+.newsletter-form input:focus {
+  outline: none;
+  border-color: var(--an-accent);
+}
+.newsletter-form input::placeholder {
+  color: var(--an-text-faint);
+}
+.newsletter-form button {
+  background: var(--an-accent);
+  color: #fff;
+  padding: 0.55rem 1rem;
+  border-radius: var(--an-radius-md);
+  font-weight: 700;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border: none;
+  letter-spacing: 0.02em;
+  /* pulse glow on hover — from pulseShadowlgprimary */
+  transition: background var(--an-transition-fast), box-shadow var(--an-transition-fast);
+}
+.newsletter-form button:hover {
+  background: var(--an-accent-hover);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2);
+}
+
+/* ============================================================
+   10. NEWS GRID CARDS  (crypto-news, ai-news, forex-news, press-release)
+   ============================================================ */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.news-card {
+  background: var(--an-bg-surface);
+  border: 1px solid var(--an-border);
+  border-radius: var(--an-radius-lg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  /* slide-up on load */
+  animation: an-slide-up 0.35s ease both;
+  transition: border-color var(--an-transition-fast), transform var(--an-transition-fast),
+              box-shadow var(--an-transition-fast);
+}
+.news-card:hover {
+  border-color: var(--an-accent-border);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Category badge — from style.css .category-style */
+.news-card .badge {
+  display: inline-block;
+  background: var(--an-accent);
+  color: #fff;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--an-radius-pill);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  align-self: flex-start;
+  /* badge pop animation on card hover */
+  transition: background var(--an-transition-fast);
+}
+.news-card:hover .badge {
+  background: var(--an-accent-hover);
+  animation: an-badge-pop 0.5s ease;
+}
+
+.news-card h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--an-text-primary);
+  line-height: 1.45;
+  margin: 0;
+  transition: color var(--an-transition-fast);
+}
+.news-card:hover h3 {
+  color: var(--an-accent-light);
+}
+
+.news-card p {
+  font-size: 0.8125rem;
+  color: var(--an-text-faint);
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+.news-card .meta {
+  font-size: 0.75rem;
+  color: var(--an-text-dimmer);
+  margin-top: auto;
+}
+.news-card .meta a {
+  color: var(--an-accent-light);
+  transition: color var(--an-transition-fast);
+}
+.news-card .meta a:hover {
+  color: var(--an-link-hover);
+}
+
+/* ============================================================
+   11. CONTACT PAGE
+   ============================================================ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.contact-card {
+  background: var(--an-bg-surface);
+  border: 1px solid var(--an-border);
+  border-radius: var(--an-radius-lg);
+  padding: 1.5rem;
+  transition: border-color var(--an-transition-fast), transform var(--an-transition-fast);
+  animation: an-slide-up 0.35s ease both;
+}
+.contact-card:hover {
+  border-color: var(--an-accent-border);
+  transform: translateY(-2px);
+}
+.contact-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--an-text-primary);
+  margin-bottom: 0.6rem;
+}
+.contact-card p {
+  font-size: 0.875rem;
+  color: var(--an-text-muted);
+  line-height: 1.65;
+  margin: 0;
+}
+.contact-card a {
+  color: var(--an-accent-light);
+}
+.contact-card a:hover {
+  color: var(--an-link-hover);
+}
+
+/* Contact form — from style.css .search-form pattern */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--an-text-muted);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.02em;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  background: var(--an-bg-surface);
+  border: 1px solid var(--an-border);
+  color: var(--an-text-primary);
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--an-radius-md);
+  font-size: 0.9rem;
+  transition: border-color var(--an-transition-fast), box-shadow var(--an-transition-fast);
+  font-family: inherit;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--an-accent);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--an-text-faint);
+}
+.form-group textarea {
+  height: 140px;
+  resize: vertical;
+}
+.form-group select option {
+  background: var(--an-bg-surface);
+}
+
+/* Submit button — from style.css .search-form button + pulseShadow pattern */
+.form-submit {
+  background: var(--an-accent);
+  color: #fff;
+  padding: 0.7rem 2rem;
+  border-radius: var(--an-radius-md);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  letter-spacing: 0.03em;
+  transition: background var(--an-transition-fast), box-shadow var(--an-transition-fast),
+              transform 0.15s ease;
+  font-family: inherit;
+}
+.form-submit:hover {
+  background: var(--an-accent-hover);
+  box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.2);
+}
+.form-submit:active {
+  transform: scale(0.98);
+}
+
+/* ============================================================
+   12. SCROLL-TO-TOP  (pattern from style.css .scroll-wrap)
+   ============================================================ */
+.scroll-top {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 38px;
+  height: 38px;
+  background: var(--an-accent);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.75rem);
+  transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+  border: none;
+  z-index: 90;
+  box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.6);
+}
+.scroll-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.scroll-top:hover {
+  background: var(--an-accent-hover);
+  animation: an-pulse-glow 0.8s ease;
+}
+
+/* ============================================================
+   13. RESPONSIVE BREAKPOINTS
+   ============================================================ */
+@media (max-width: 960px) {
+  .news-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .related-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  /* Hide nav on mobile — from style.css @media 767px header styles */
+  .site-nav {
+    display: none;
+  }
+
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+
+  /* Sidebar stacks below article */
+  .sidebar {
+    position: static;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-wrap {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* ============================================================
+   14. UTILITY HELPERS
+   ============================================================ */
+/* From 1de98341b7e33ab1.css .sr-only */
+.sr-only {
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+}
+
+/* Visually accent a link inside body copy */
+.an-link {
+  color: var(--an-accent-light);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.an-link:hover {
+  color: var(--an-link-hover);
+}
