@@ -1,3 +1,6 @@
+/* --- Google Fonts import --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
+
 /* =============================================
    AstersdexNews — style.css
    Dark theme, orange accent (#f7931a)
@@ -19,9 +22,6 @@ body {
   line-height: 1.7;
   min-height: 100vh;
 }
-
-/* --- Google Fonts import --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
 
 /* =============================================
    HEADER / NAV
